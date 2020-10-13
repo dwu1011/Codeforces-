@@ -1,6 +1,5 @@
 //
 //
-//
 
 #include <bits/stdc++.h>
 
@@ -15,72 +14,53 @@
 
 using namespace std;
 
-void TEST(){
-	int z;
-	cin>>z;
-	vector<int> a(z);
-	for(int i = 0; i< z; i++){
-		cin >> a[i];
-	}
-	int max = 0; 
-	for(int i = 0; i< z; i++){
-		max += a[i];
-	}
-	if(max == 0){
-		cout << "NO" << endl;
-	}else{
-		cout << "YES" << endl;
-		sort(a.begin(), a.end(), greater<int>());
-		vector<int> negative;
-		vector<int> positive;
-		int zero = 0;
-		int negSum= 0;
-		int posSum = 0;
-		for(int i = 0;i < z; i++){
-			if(a[i] < 0){
-				negative.pb(a[i]);
-				negSum += a[i];
-			}else if(a[i] > 0){
-				positive.pb(a[i]);
-				posSum += a[i];
-			}else{
-				zero ++;
-			}
-		}
-		if((0-negSum) > posSum){
-			for(int i = 0;i < negative.size();i++){
-				cout << negative[i] << " ";
-			}
-			for(int i = 0;i < positive.size();i++){
-				cout << positive[i] << " ";
-			}
-			for(int i = 0; i< zero ; i++){
-				cout << 0 << " ";
-			}
-		}else{
-			for(int i = 0;i < positive.size();i++){
-				cout << positive[i] << " ";
-			}
-			for(int i = 0;i < negative.size();i++){
-				cout << negative[i] << " ";
-			}
-			for(int i = 0; i< zero ; i++){
-				cout << 0 << " ";
-			}
+vector<int> time;
+map <int, pair<int,int>> cel;
+vector<int> comp;
 
-		}
-		cout << endl;
+bool related(int x, int y){
+	int distance = abs(cel[x].first - cel[y].first) + abs(cel[x].second - cel[y].second);
+	if(distance >= abs(y-x)){
+		return true;
 	}
+	return false;
 }
 
 int main(){
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
 	
-	int T;
-	cin >> T;
-	for(int i = 0;i < T;i++){
-		TEST();
+	int r,n;
+	cin >> r >> n;
+	int x, y , t;
+	for(int i = 0; i< n; i++){
+		cin >> x >> y >> t;
+		time.pb(t);
+		cel.insert({t,{x,y}});
 	}
-	
+	//insert start
+	time.pb(0);
+	cel.insert({0,{1,1}});
+	sort(time.begin(), time.end());
+	//variables
+	comp.pb(0);
+	int cpb = -1; //compatible 
+	for(int i = 1;i < n; i++){
+		for(int j = 0; j<i;j++){
+			if(related(time[j], time[i])){
+				cpb = max(0,comp[j]);
+			}
+		}
+		if(cpb != -1){
+			comp.pb(cpb+1);
+		}else{
+			comp.pb(-1);
+		}
+		cpb = -1;
+	}
+	int ans = 0;
+	for(int i = 0; i< comp.size(); i++){
+		ans = max(ans,comp[i]);
+	}
+	cout << ans << endl;
 }
