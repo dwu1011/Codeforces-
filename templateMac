@@ -1,4 +1,9 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <list>
+#include <unordered_map>
+
 using namespace std;
 using ll = long long;
 using str = string;
@@ -8,17 +13,9 @@ using vi = vector<int>;
 #define s second
 #define all(x) begin(x), end(x)
 
-struct Edge{
-	int to, weight;
-	Edge(int dest, int w):
-		to(dest), weight(w)
-	{
-	}
-};
-
 int main(){
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
 
-
+	//g++ std-std=c++11 -O2 -Wall .cpp -o
 }
